@@ -1,0 +1,26 @@
+{
+  "name": "fileRequest.Ninja.JS",
+  "version": "0.0.0",
+  "authors": [
+    "Cleber de Moraes Goncalves <cleber.programmer@hotmail.com>"
+  ],
+  "description": "Requisita arquivos de uma determinada url, fazendo controle das requisicoes com controle de concorrencia de requisicao (semafaro)",
+  "main": "fileRequest.js",
+  "keywords": [
+    "javascript"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/Bibizzy/fileRequest.Ninja.JS",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "Ninja.JS": "*",
+    "curry.Ninja.JS": "*",
+    "http.Ninja.JS": "*"
+  }
+}
