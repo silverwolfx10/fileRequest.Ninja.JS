@@ -13,8 +13,13 @@
  */
 this.Ninja.module('$fileRequest', ['$curry', '$http'], function ($curry, $http) {
   
-  var listeners = {};
+  var handlers = {};
   var state = {};
+  
+  function fileRequest(url, callback) {
+    solveCurrentState(url);
+    state(url, callback);
+  }
 
   function requestFile(url) {
     $http('GET', url, '')
@@ -24,37 +29,30 @@ this.Ninja.module('$fileRequest', ['$curry', '$http'], function ($curry, $http) 
   }
   
   function runQueue(url) {
-    listeners[url].forEach($curry(state)(url));
-  }
-  
-  function fileRequest(url, callback) {
-    solveCurrentState(url);
-    state(url, callback);
-  }
-  
-  function setTheStateForWaiting(url, callback) {
-    state[url] = function (url, callback) {
-      (listeners[url] = listeners[url] || []).push(callback);
-    };
+    handlers[url].forEach($curry(state)(url));
   }
   
   function savingResponseInTheStorage(url, xhr) {
     localStorage.setItem(url, xhr.responseText);
   }
   
-  function solveCurrentState(url) {
-    
-    if (state[url]) return;
-    
-    setTheStateForWaiting();
-    requestFile(url);
-    
-  }
-  
   function setTheStateForActive(url) {
     state[url] = function (url, callback) {
       callback(localStorage.getItem(url));
     };
+  }
+  
+  function setTheStateForWaiting(url, callback) {
+    state[url] = function (url, callback) {
+      (handlers[url] = handlers[url] || []).push(callback);
+    };
+  }
+  
+  function solveCurrentState(url) {
+    if (!state[url]) {
+      setTheStateForWaiting();
+      requestFile(url);
+    }
   }
   
   return $curry(fileRequest);
