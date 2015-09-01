@@ -39,8 +39,7 @@ this.Ninja.module('$fileRequest', ['$curry', '$forEach', '$http'], function ($cu
    * 
    */
   function fileRequest(url, callback) {
-    solveCurrentState(url);
-    state(url, callback);
+    solveCurrentState(url), state[url](url, callback);
   }
 
   /**
@@ -142,10 +141,7 @@ this.Ninja.module('$fileRequest', ['$curry', '$forEach', '$http'], function ($cu
    * 
    */
   function solveCurrentState(url) {
-    if (!state[url]) {
-      setTheStateForWaiting(url);
-      requestFile(url);
-    }
+    state[url] || (setTheStateForWaiting(url), requestFile(url));
   }
   
   /**
