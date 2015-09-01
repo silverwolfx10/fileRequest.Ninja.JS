@@ -57,7 +57,7 @@ this.Ninja.module('$fileRequest', ['$curry', '$forEach', '$http'], function ($cu
     $http('GET', url, '')
       .when(200, $curry(savingResponseInTheStorage)(url))
       .when(200, setTheStateForActive.bind(null, url))
-      .when(200, runQueue.bind(null, url));
+      .when(200, $curry(runQueue)(url));
   }
   
   /**
@@ -71,7 +71,7 @@ this.Ninja.module('$fileRequest', ['$curry', '$forEach', '$http'], function ($cu
    *        runQueue('./ninja.min.js');
    * 
    */
-  function runQueue(url) {
+  function runQueue(url, xhr) {
     $forEach(handlers[url], $curry(state[url])(url));
   }
   
