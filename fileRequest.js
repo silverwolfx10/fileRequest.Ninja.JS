@@ -143,7 +143,7 @@ this.Ninja.module('$fileRequest', ['$curry', '$forEach', '$http'], function ($cu
    */
   function solveCurrentState(url) {
     if (!state[url]) {
-      setTheStateForWaiting();
+      setTheStateForWaiting(url);
       requestFile(url);
     }
   }
