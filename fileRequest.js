@@ -72,7 +72,7 @@ this.Ninja.module('$fileRequest', ['$curry', '$forEach', '$http'], function ($cu
    * 
    */
   function runQueue(url, xhr) {
-    $forEach(handlers[url], $curry(state[url])(url));
+    $forEach(handlers[url], function (a) { a(xhr.responseText); });
   }
   
   /**
