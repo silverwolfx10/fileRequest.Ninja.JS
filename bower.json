@@ -21,6 +21,7 @@
   "dependencies": {
     "Ninja.JS": "*",
     "curry.Ninja.JS": "*",
+    "forEach.Ninja.JS": "*",
     "http.Ninja.JS": "*"
   }
 }

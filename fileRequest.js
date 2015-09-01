@@ -11,7 +11,7 @@
  *        $fileRequest('./ninja.min.js', console.log.bind(console));
  * 
  */
-this.Ninja.module('$fileRequest', ['$curry', '$http'], function ($curry, $http) {
+this.Ninja.module('$fileRequest', ['$curry', '$forEach', '$http'], function ($curry, $forEach, $http) {
   
   /**
    * Solicitacoes que estao na espera da responsa
@@ -73,7 +73,7 @@ this.Ninja.module('$fileRequest', ['$curry', '$http'], function ($curry, $http) 
    * 
    */
   function runQueue(url) {
-    handlers[url].forEach($curry(state)(url));
+    $forEach(handlers[url], $curry(state)(url));
   }
   
   /**
