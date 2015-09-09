@@ -54,10 +54,9 @@ this.Ninja.module('$fileRequest', ['$curry', '$forEach', '$http'], function ($cu
    * 
    */
   function requestFile(url) {
-    $http('GET', url, '')
-      .when(200, $curry(savingResponseInTheStorage)(url))
-      .when(200, setTheStateForActive.bind(null, url))
-      .when(200, $curry(runQueue)(url));
+    $http('GET', url, '').when(200, function (xhr) {
+      savingResponseInTheStorage(url, xhr), setTheStateForActive(url), runQueue(url, xhr);
+    });
   }
   
   /**
