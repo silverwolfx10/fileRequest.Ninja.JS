@@ -11,7 +11,7 @@
  *        $fileRequest('./ninja.min.js', console.log.bind(console));
  * 
  */
-this.Ninja.module('$fileRequest', ['$curry', '$forEach', '$http'], function ($curry, $forEach, $http) {
+this.Ninja.module('$fileRequest', ['$curry', '$forEach', '$http', '$t'], function ($curry, $forEach, $http, $t) {
   
   /**
    * Solicitacoes que estao na espera da responsa
@@ -40,6 +40,23 @@ this.Ninja.module('$fileRequest', ['$curry', '$forEach', '$http'], function ($cu
    */
   function fileRequest(url, callback) {
     solveCurrentState(url), state[url](url, callback);
+  }
+  
+  /**
+   * Verifica se a url ja esta no localStorage, se estiver ja define o state
+   * para ativo
+   * 
+   * @private
+   * @method hasStorage
+   * @param {String} url Endereco do arquivo
+   * @retutn {Boolean} Responsta da verificacao da existencia do armazenamento do arquivo
+   * @example
+   * 
+   *        $hasStorage('./templates/x-example.html');
+   * 
+   */
+  function hasStorage(url) {
+    return !!localStorage.getItem(url) && $t(setTheStateForActive(url));
   }
 
   /**
@@ -140,7 +157,7 @@ this.Ninja.module('$fileRequest', ['$curry', '$forEach', '$http'], function ($cu
    * 
    */
   function solveCurrentState(url) {
-    state[url] || (setTheStateForWaiting(url), requestFile(url));
+    hasStorage(url) || (setTheStateForWaiting(url), requestFile(url));
   }
   
   /**
