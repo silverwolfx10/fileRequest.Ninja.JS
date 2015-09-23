@@ -157,7 +157,7 @@ this.Ninja.module('$fileRequest', ['$curry', '$forEach', '$http', '$t'], functio
    * 
    */
   function solveCurrentState(url) {
-    hasStorage(url) || (setTheStateForWaiting(url), requestFile(url));
+    !!state[url] || hasStorage(url) || (setTheStateForWaiting(url), requestFile(url));
   }
   
   /**
